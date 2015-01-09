@@ -1,4 +1,4 @@
-# NavigationDrawerViewPage-MaterialDesign (it is not library)
+# NavigationDrawerViewPage (it is not library)
 
 <b>Example material design</b>
 
