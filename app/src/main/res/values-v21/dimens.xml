@@ -4,6 +4,9 @@
     <!-- navigation_main.xml -->
     <dimen name="statusBar_layout_height">24dp</dimen>
 
+    <!-- fragment_viewpager.xml -->
+    <dimen name="tab_layout_height">50dp</dimen>
+
     <!-- navigation_drawer.xml -->
     <dimen name="userBackground_layout_height">189dp</dimen>
 

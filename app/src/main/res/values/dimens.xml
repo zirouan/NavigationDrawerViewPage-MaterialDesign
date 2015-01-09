@@ -6,6 +6,9 @@
     <!-- navigation_drawer.xml -->
     <dimen name="statusBar_layout_height">0dp</dimen>
 
+    <!-- fragment_viewpager.xml -->
+    <dimen name="tab_layout_height">50dp</dimen>
+
     <!-- title item list -->
     <dimen name="default_textSize">14sp</dimen>
 
