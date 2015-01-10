@@ -3,16 +3,9 @@
 	<color name="white">#ffffff</color>
 	<color name="gray">#e0e0e0</color>
 	<color name="black">#000000</color>
-	<color name="background">#EEEEEE</color>	
 		
 	<color name="transparent">#00000000</color>
-		
-	<!-- Status para as lista -->	
-		<color name="navigation_view">#DADADC</color>			
-		<color name="navigation_items">#303030</color>		
-		<color name="gray_navegation">#ffffff</color>		
 
-	<color name="green_light">#4CAF50</color>
-	<color name="green_dark">#43A047</color>
-
+	<color name="colorPrimary">#4CAF50</color>
+	<color name="colorPrimaryDark">#43A047</color>
 </resources>
