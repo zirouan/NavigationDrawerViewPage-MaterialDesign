@@ -52,11 +52,6 @@ public class NavigationMain extends NavigationLiveo implements NavigationLiveoLi
         mSparseCounterItem.put(0, 7);
         mSparseCounterItem.put(6, 250);
 
-        //remove the shadow of the toolbar since I'm using tabs
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.getToolbar().setElevation(0);
-        }
-
         //If not please use the FooterDrawer use the setFooterVisible(boolean visible) method with value false
         this.setFooterInformationDrawer(R.string.settings, R.drawable.ic_settings_black_24dp);
 
@@ -89,6 +84,11 @@ public class NavigationMain extends NavigationLiveo implements NavigationLiveoLi
 
         if (mFragment != null){
             mFragmentManager.beginTransaction().replace(layoutContainerId, mFragment).commit();
+        }
+
+        //remove the shadow of the toolbar since I'm using tabs
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.getToolbar().setElevation(position != 1 ? 10 : 0);
         }
     }
 

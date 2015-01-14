@@ -2,5 +2,8 @@
 <resources>
 
     <style name="myTheme" parent="nLiveo.Theme.Light">
+        <item name="colorPrimary">@color/nliveo_green_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/nliveo_green_colorPrimaryDark</item>
+        <item name="colorAccent">@color/nliveo_green_colorPrimary</item>
     </style>
 </resources>
