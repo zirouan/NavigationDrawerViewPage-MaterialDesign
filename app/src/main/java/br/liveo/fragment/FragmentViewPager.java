@@ -1,8 +1,5 @@
 package br.liveo.fragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.liveo.adapter.TabPagerItem;
 import br.liveo.adapter.ViewPagerAdapter;
@@ -41,7 +41,7 @@ public class FragmentViewPager extends Fragment{
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mTabs));
 
         PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        mSlidingTabLayout.setTextColorResource(R.color.white);
+        mSlidingTabLayout.setTextColorResource(R.color.nliveo_white);
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 }

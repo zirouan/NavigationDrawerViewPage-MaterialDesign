@@ -1,259 +1,114 @@
-
 package br.liveo.navigationviewpagerliveo;
 
-import android.app.Activity;
-import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseIntArray;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.liveo.adapter.NavigationAdapter;
 import br.liveo.fragment.FragmentMain;
 import br.liveo.fragment.FragmentViewPager;
-import br.liveo.util.Constant;
-import br.liveo.util.Menus;
-import br.liveo.util.Utils;
+import br.liveo.interfaces.NavigationLiveoListener;
+import br.liveo.navigationliveo.NavigationLiveo;
 
-public class NavigationMain extends ActionBarActivity {
+public class NavigationMain extends NavigationLiveo implements NavigationLiveoListener {
 
-    private TextView mUserName;
-    private TextView mUserEmail;
-    private ImageView mUserPhoto;
-    private ImageView mUserBackground;
+    private List<String> mListNameItem;
 
-    private ListView mList;
-    private int mLastPosition = 2;
-	private DrawerLayout mDrawerLayout;
-    private RelativeLayout mFooterDrawer;
-    private RelativeLayout mRelativeDrawer;
+    @Override
+    public void onInt(Bundle bundle) {
+        this.setNavigationListener(this);
 
-	private FragmentManager mFragmentManager;
-	private NavigationAdapter mNavigationAdapter;
-	private ActionBarDrawerToggleCompat mDrawerToggle;
+        mListNameItem = new ArrayList<>();
+        mListNameItem.add(0, getString(R.string.inbox));
+        mListNameItem.add(1, getString(R.string.starred));
+        mListNameItem.add(2, getString(R.string.sent_mail));
+        mListNameItem.add(3, getString(R.string.drafts));
+        mListNameItem.add(4, getString(R.string.more_markers)); //This item will be a subHeader
+        mListNameItem.add(5, getString(R.string.trash));
+        mListNameItem.add(6, getString(R.string.spam));
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.navigation_main);
+        List<Integer> mListIconItem = new ArrayList<>();
+        mListIconItem.add(0, R.drawable.ic_inbox_black_24dp);
+        mListIconItem.add(1, R.drawable.ic_star_black_24dp);
+        mListIconItem.add(2, R.drawable.ic_send_black_24dp);
+        mListIconItem.add(3, R.drawable.ic_drafts_black_24dp);
+        mListIconItem.add(4, 0); //When the item is a subHeader the value of the icon 0
+        mListIconItem.add(5, R.drawable.ic_delete_black_24dp);
+        mListIconItem.add(6, R.drawable.ic_report_black_24dp);
 
-        mList = (ListView) findViewById(R.id.list);
-        mList.setOnItemClickListener(new DrawerItemClickListener());
+        //{optional}
+        List<Integer> mListHeaderItem = new ArrayList<>(); //indicate who the items is a subheader
+        mListHeaderItem.add(4);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        mDrawerToggle = new ActionBarDrawerToggleCompat(this, mDrawerLayout, mToolbar);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //{optional}
+        SparseIntArray mSparseCounterItem = new SparseIntArray(); //indicate all items that have a counter
+        mSparseCounterItem.put(0, 7);
+        mSparseCounterItem.put(6, 250);
 
-        mFooterDrawer = (RelativeLayout) this.findViewById(R.id.footerDrawer);
-        mFooterDrawer.setOnClickListener(onClickFooterDrawer);
-
-        mRelativeDrawer = (RelativeLayout) this.findViewById(R.id.relativeDrawer);
-
-		if (mList != null) {
-            mountListNavigation();
-		}
-
-		if (savedInstanceState != null) {
-			setLastPosition(savedInstanceState.getInt(Constant.LAST_POSITION));
-
-			mNavigationAdapter.resetarCheck();
-			mNavigationAdapter.setChecked(mLastPosition, true);
-	    }else{
-            showSelectedFragment(mLastPosition);
-	    }
-
-        this.setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-	}
-
-	private void showSelectedFragment(int position){
-
-        if (position != 0){
-            int mPosition = (position-1);//-1 Refers to the index 0 of the list header
-
-            Fragment mFragment;
-            mFragmentManager = getSupportFragmentManager();
-
-            switch (mPosition){
-
-                case Constant.STARRED:
-                    mFragment = new FragmentViewPager();
-                    break;
-
-                default:
-                    mFragment = new FragmentMain().newInstance(Utils.getTitleItem(NavigationMain.this, mPosition));
-            }
-
-            if (mFragment != null){
-                setLastPosition(mPosition);
-                mNavigationAdapter.resetarCheck();
-                mNavigationAdapter.setChecked(mPosition, true);
-                mFragmentManager.beginTransaction().replace(R.id.frame_container, mFragment).commit();
-            }
+        //remove the shadow of the toolbar since I'm using tabs
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.getToolbar().setElevation(0);
         }
-	}
 
-    private void hideMenus(Menu menu, int position) {
+        //If not please use the FooterDrawer use the setFooterVisible(boolean visible) method with value false
+        this.setFooterInformationDrawer(R.string.settings, R.drawable.ic_settings_black_24dp);
 
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mRelativeDrawer);
-
-        switch (position) {
-		case Constant.INBOX:
-	        menu.findItem(Menus.ADD).setVisible(!drawerOpen);
-	        menu.findItem(Menus.SEARCH).setVisible(!drawerOpen);
-			break;
-		}
-    }
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-		outState.putInt(Constant.LAST_POSITION, mLastPosition);
-	}
-
-	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(mDrawerToggle != null) {
-            if (mDrawerToggle.onOptionsItemSelected(item)) {
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
+        this.setNavigationAdapter(mListNameItem, mListIconItem, mListHeaderItem, mSparseCounterItem);
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-    	hideMenus(menu, mLastPosition);
-        return super.onPrepareOptionsMenu(menu);
+    public void onUserInformation() {
+        this.mUserName.setText("Rudson Lima");
+        this.mUserEmail.setText("rudsonlive@gmail.com");
+        this.mUserPhoto.setImageResource(R.drawable.ic_rudsonlive);
+        this.mUserBackground.setImageResource(R.drawable.ic_user_background);
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
-	}
+    @Override
+    public void onItemClickNavigation(int position, int layoutContainerId) {
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+        Fragment mFragment;
+        FragmentManager mFragmentManager = getSupportFragmentManager();
 
-        if (mDrawerToggle != null) {
-            mDrawerToggle.syncState();
-        }
-	 }
+        switch (position){
 
-	private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
+            case 1:
+                mFragment = new FragmentViewPager();
+                break;
 
-        public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar){
-            super(
-                    activity,
-                    drawerLayout, toolbar,
-                    R.string.drawer_open,
-                    R.string.drawer_close);
+            default:
+                mFragment = new FragmentMain().newInstance(mListNameItem.get(position));
         }
 
-		@Override
-		public void onDrawerClosed(View view) {
-			supportInvalidateOptionsMenu();
-		}
-
-		@Override
-		public void onDrawerOpened(View drawerView) {
-			supportInvalidateOptionsMenu();
-		}
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		// TODO Auto-generated method stub
-		super.onConfigurationChanged(newConfig);
-
-        if (mDrawerToggle != null) {
-            mDrawerToggle.onConfigurationChanged(newConfig);
-        }
-	}
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            showSelectedFragment(position);
-	    	mDrawerLayout.closeDrawer(mRelativeDrawer);
+        if (mFragment != null){
+            mFragmentManager.beginTransaction().replace(layoutContainerId, mFragment).commit();
         }
     }
 
-    public void setLastPosition(int position){
-        this.mLastPosition = position;
-    }
-
-    private OnClickListener onClickUserPhoto = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-            Utils.toastShowShort(getApplicationContext(), R.string.open_user_profile);
-			mDrawerLayout.closeDrawer(mRelativeDrawer);
-		}
-	};
-
-    private OnClickListener onClickFooterDrawer = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Utils.toastShowShort(getApplicationContext(), R.string.open_settings);
-            mDrawerLayout.closeDrawer(mRelativeDrawer);
+    @Override
+    public void onPrepareOptionsMenuNavigation(Menu menu, int position, boolean visible) {
+        switch (position) {
+            case 0:
+                menu.findItem(R.id.menu_add).setVisible(!visible);
+                menu.findItem(R.id.menu_search).setVisible(!visible);
+                break;
         }
-    };
-
-    private void mountListNavigation(){
-
-        //Header list navigation
-        mountListHeader();
-
-        List<Integer> mListHeader = new ArrayList<>();
-        mListHeader.add(Constant.MORE_MARKERS);
-
-        SparseIntArray  mSparseCounter = new SparseIntArray();
-        mSparseCounter.put(Constant.INBOX, 7);
-        mSparseCounter.put(Constant.SPAM, 10);
-
-        mNavigationAdapter = new NavigationAdapter(this, NavigationList.getNavigationAdapter(this, mListHeader, mSparseCounter));
-        mList.setAdapter(mNavigationAdapter);
     }
 
-    private void mountListHeader(){
+    @Override
+    public void onClickFooterItemNavigation(View v) {
+        Toast.makeText(this, R.string.open_settings, Toast.LENGTH_SHORT).show();
+    }
 
-        View mHeader = getLayoutInflater().inflate(R.layout.navigation_list_header, mList, false);
-
-        mUserName = (TextView) mHeader.findViewById(R.id.userName);
-        mUserEmail = (TextView) mHeader.findViewById(R.id.userEmail);
-
-        mUserPhoto = (ImageView) mHeader.findViewById(R.id.userPhoto);
-        mUserPhoto.setImageResource(R.drawable.ic_rudsonlive);
-        mUserPhoto.setOnClickListener(onClickUserPhoto);
-
-        mUserBackground = (ImageView) mHeader.findViewById(R.id.userBackground);
-        mUserBackground.setImageResource(R.drawable.ic_user_background);
-
-        mUserName.setText("Rudson Lima");
-        mUserEmail.setText("rudsonlive@gmail.com");
-
-        mList.addHeaderView(mHeader);
+    @Override
+    public void onClickUserPhotoNavigation(View v) {
+        Toast.makeText(this, R.string.open_user_profile, Toast.LENGTH_SHORT).show();
     }
 }

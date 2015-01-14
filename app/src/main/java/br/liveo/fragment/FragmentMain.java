@@ -15,18 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import br.liveo.navigationviewpagerliveo.R;
-import br.liveo.util.Constant;
-import br.liveo.util.Menus;
-import br.liveo.util.Utils;
 
 public class FragmentMain extends Fragment {
 
     private boolean mSearchCheck;
+    public static final String TEXT_FRAGMENT = "TEXT_FRAGMENT";
 	
 	public FragmentMain newInstance(String text){
 		FragmentMain mFragment = new FragmentMain();
 		Bundle mBundle = new Bundle();
-		mBundle.putString(Constant.TEXT_FRAGMENT, text);
+		mBundle.putString(TEXT_FRAGMENT, text);
 		mFragment.setArguments(mBundle);
 		return mFragment;
 	}
@@ -38,7 +36,7 @@ public class FragmentMain extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         TextView mTxtTitle = (TextView) rootView.findViewById(R.id.txtTitle);
-        mTxtTitle.setText(getArguments().getString(Constant.TEXT_FRAGMENT));
+        mTxtTitle.setText(getArguments().getString(TEXT_FRAGMENT));
 
 		rootView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT ));		
 		return rootView;		
@@ -57,15 +55,15 @@ public class FragmentMain extends Fragment {
 		super.onCreateOptionsMenu(menu, inflater);		
 		inflater.inflate(R.menu.menu, menu);
 
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(Menus.SEARCH));
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search));
         searchView.setQueryHint(this.getString(R.string.search));
 
         ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text))
-                .setHintTextColor(getResources().getColor(R.color.white));
+                .setHintTextColor(getResources().getColor(R.color.nliveo_white));
         searchView.setOnQueryTextListener(onQuerySearchView);
 
-		menu.findItem(Menus.ADD).setVisible(true);
-		menu.findItem(Menus.SEARCH).setVisible(true);		
+		menu.findItem(R.id.menu_add).setVisible(true);
+		menu.findItem(R.id.menu_search).setVisible(true);
   	    
 		mSearchCheck = false;	
 	}	
@@ -76,13 +74,13 @@ public class FragmentMain extends Fragment {
 		
 		switch (item.getItemId()) {
 
-		case Menus.ADD:
-            Utils.toastShowShort(getActivity(), R.string.add);
+		case R.id.menu_add:
+
 			break;				
 		
-		case Menus.SEARCH:
+		case R.id.menu_search:
 			mSearchCheck = true;
-            Utils.toastShowShort(getActivity(), R.string.search);
+
 			break;
 		}		
 		return true;
