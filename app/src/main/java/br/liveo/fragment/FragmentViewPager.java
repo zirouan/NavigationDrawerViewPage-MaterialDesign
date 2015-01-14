@@ -32,10 +32,6 @@ public class FragmentViewPager extends Fragment{
             Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_viewpager, container, false);
-
-//        View mShadow = rootView.findViewById(R.id.shadow);
-//        mShadow.bringToFront();
-
         rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ));
         return rootView;
     }

@@ -13,6 +13,7 @@
         app:pstsIndicatorColor="@color/nliveo_white" />
 
     <View
+        android:id="@+id/shadow"
         android:layout_width="match_parent"
         android:layout_height="7dp"
         android:background="@drawable/tab_shadow"/>
