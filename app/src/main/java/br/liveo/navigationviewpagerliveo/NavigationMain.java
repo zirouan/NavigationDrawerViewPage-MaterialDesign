@@ -1,6 +1,5 @@
 package br.liveo.navigationviewpagerliveo;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,6 +51,8 @@ public class NavigationMain extends NavigationLiveo implements NavigationLiveoLi
         mSparseCounterItem.put(0, 7);
         mSparseCounterItem.put(6, 250);
 
+        this.setElevationToolBar(this.getCurrentPosition() != 1 ? 15 : 0);
+
         //If not please use the FooterDrawer use the setFooterVisible(boolean visible) method with value false
         this.setFooterInformationDrawer(R.string.settings, R.drawable.ic_settings_black_24dp);
 
@@ -73,7 +74,6 @@ public class NavigationMain extends NavigationLiveo implements NavigationLiveoLi
         FragmentManager mFragmentManager = getSupportFragmentManager();
 
         switch (position){
-
             case 1:
                 mFragment = new FragmentViewPager();
                 break;
@@ -86,10 +86,7 @@ public class NavigationMain extends NavigationLiveo implements NavigationLiveoLi
             mFragmentManager.beginTransaction().replace(layoutContainerId, mFragment).commit();
         }
 
-        //remove the shadow of the toolbar since I'm using tabs
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.getToolbar().setElevation(position != 1 ? 10 : 0);
-        }
+        setElevationToolBar(position != 1 ? 15 : 0);
     }
 
     @Override
