@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.astuetz.PagerSlidingTabStrip
+    <br.liveo.ui.view.SlidingTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_layout_height"
-        android:background="?attr/colorPrimary"
-        app:pstsIndicatorColor="@color/nliveo_white" />
-
-    <View
-        android:id="@+id/shadow"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="@drawable/tab_shadow"/>
+        android:background="?attr/colorPrimary"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

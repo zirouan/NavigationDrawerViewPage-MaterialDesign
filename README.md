@@ -26,6 +26,5 @@ Quando for utilizar o projeto por favor, retire todas as imagens e strings refer
 source:<br> 
 
 <a href="https://github.com/rudsonlive/NavigationDrawer-MaterialDesign" target="_blank">Library NavigationDrawer-Material</a><br>
-<a href="https://github.com/jpardogo/PagerSlidingTabStrip" target="_blank">Library PagerSlidingTabStrip</a><br>
 <a href="http://www.google.com/design/spec/components/tabs.html" target="_blank">Tabs</a><br>
 <a href="http://www.google.com/design/spec/patterns/navigation-drawer.html" target="_blank">NavigationDrawer</a>

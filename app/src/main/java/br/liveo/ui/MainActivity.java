@@ -1,4 +1,4 @@
-package br.liveo.navigationviewpagerliveo;
+package br.liveo.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,12 +11,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.liveo.fragment.FragmentMain;
-import br.liveo.fragment.FragmentViewPager;
 import br.liveo.interfaces.NavigationLiveoListener;
 import br.liveo.navigationliveo.NavigationLiveo;
+import br.liveo.navigationviewpagerliveo.R;
 
-public class NavigationMain extends NavigationLiveo implements NavigationLiveoListener {
+public class MainActivity extends NavigationLiveo implements NavigationLiveoListener {
 
     private List<String> mListNameItem;
 
@@ -75,11 +74,11 @@ public class NavigationMain extends NavigationLiveo implements NavigationLiveoLi
 
         switch (position){
             case 1:
-                mFragment = new FragmentViewPager();
+                mFragment = new ViewPagerFragment();
                 break;
 
             default:
-                mFragment = new FragmentMain().newInstance(mListNameItem.get(position));
+                mFragment = new MainFragment().newInstance(mListNameItem.get(position));
         }
 
         if (mFragment != null){
