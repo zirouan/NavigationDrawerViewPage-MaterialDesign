@@ -2,24 +2,18 @@ package br.liveo.adapter;
 
 import android.support.v4.app.Fragment;
 
-import br.liveo.ui.MainFragment;
-
 public class TabPagerItem {
 
     private final CharSequence mTitle;
-    private final int position;
+    private final Fragment mFragment;
 
-    private Fragment[] listFragments;
-
-    public TabPagerItem(int position, CharSequence title) {
+    public TabPagerItem(CharSequence title, Fragment fragment) {
         this.mTitle = title;
-        this.position = position;
-
-        listFragments = new Fragment[]{new MainFragment().newInstance(title.toString()), new MainFragment().newInstance(title.toString()), new MainFragment().newInstance(title.toString())};
+        this.mFragment = fragment;
     }
 
-    public Fragment createFragment() {
-        return listFragments[position];
+    public Fragment getFragment() {
+        return mFragment;
     }
 
     public CharSequence getTitle() {

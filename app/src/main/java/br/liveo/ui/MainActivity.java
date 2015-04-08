@@ -78,7 +78,8 @@ public class MainActivity extends NavigationLiveo implements NavigationLiveoList
                 break;
 
             default:
-                mFragment = new MainFragment().newInstance(mListNameItem.get(position));
+                mFragment = MainFragment.newInstance(mListNameItem.get(position));
+                break;
         }
 
         if (mFragment != null){

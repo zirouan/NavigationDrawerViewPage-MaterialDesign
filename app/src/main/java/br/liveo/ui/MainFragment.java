@@ -21,7 +21,7 @@ public class MainFragment extends Fragment {
     private boolean mSearchCheck;
     public static final String TEXT_FRAGMENT = "TEXT_FRAGMENT";
 	
-	public MainFragment newInstance(String text){
+	public static MainFragment newInstance(String text){
 		MainFragment mFragment = new MainFragment();
 		Bundle mBundle = new Bundle();
 		mBundle.putString(TEXT_FRAGMENT, text);
