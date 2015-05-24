@@ -4,25 +4,29 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.SparseIntArray;
-import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.liveo.interfaces.NavigationLiveoListener;
+import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.navigationliveo.NavigationLiveo;
 import br.liveo.navigationviewpagerliveo.R;
 
-public class MainActivity extends NavigationLiveo implements NavigationLiveoListener {
+public class MainActivity extends NavigationLiveo implements OnItemClickListener {
 
     private List<String> mListNameItem;
 
     @Override
     public void onInt(Bundle bundle) {
-        this.setNavigationListener(this);
 
+        // User Information
+        this.userName.setText("Rudson Lima");
+        this.userEmail.setText("rudsonlive@gmail.com");
+        this.userPhoto.setImageResource(R.drawable.ic_rudsonlive);
+        this.userBackground.setImageResource(R.drawable.ic_user_background_first);
+
+        // name of the list items
         mListNameItem = new ArrayList<>();
         mListNameItem.add(0, getString(R.string.inbox));
         mListNameItem.add(1, getString(R.string.starred));
@@ -32,43 +36,41 @@ public class MainActivity extends NavigationLiveo implements NavigationLiveoList
         mListNameItem.add(5, getString(R.string.trash));
         mListNameItem.add(6, getString(R.string.spam));
 
+        // icons list items
         List<Integer> mListIconItem = new ArrayList<>();
-        mListIconItem.add(0, R.drawable.ic_inbox_black_24dp);
-        mListIconItem.add(1, R.drawable.ic_star_black_24dp);
-        mListIconItem.add(2, R.drawable.ic_send_black_24dp);
-        mListIconItem.add(3, R.drawable.ic_drafts_black_24dp);
+        mListIconItem.add(0, R.mipmap.ic_inbox_black_24dp);
+        mListIconItem.add(1, R.mipmap.ic_star_black_24dp); //Item no icon set 0
+        mListIconItem.add(2, R.mipmap.ic_send_black_24dp); //Item no icon set 0
+        mListIconItem.add(3, R.mipmap.ic_drafts_black_24dp);
         mListIconItem.add(4, 0); //When the item is a subHeader the value of the icon 0
-        mListIconItem.add(5, R.drawable.ic_delete_black_24dp);
-        mListIconItem.add(6, R.drawable.ic_report_black_24dp);
+        mListIconItem.add(5, R.mipmap.ic_delete_black_24dp);
+        mListIconItem.add(6, R.mipmap.ic_report_black_24dp);
 
-        //{optional}
-        List<Integer> mListHeaderItem = new ArrayList<>(); //indicate who the items is a subheader
+        //{optional} - Among the names there is some subheader, you must indicate it here
+        List<Integer> mListHeaderItem = new ArrayList<>();
         mListHeaderItem.add(4);
 
-        //{optional}
+        //{optional} - Among the names there is any item counter, you must indicate it (position) and the value here
         SparseIntArray mSparseCounterItem = new SparseIntArray(); //indicate all items that have a counter
         mSparseCounterItem.put(0, 7);
+        mSparseCounterItem.put(1, 123);
         mSparseCounterItem.put(6, 250);
 
         this.setElevationToolBar(this.getCurrentPosition() != 1 ? 15 : 0);
 
-        //If not please use the FooterDrawer use the setFooterVisible(boolean visible) method with value false
-        this.setFooterInformationDrawer(R.string.settings, R.drawable.ic_settings_black_24dp);
-
-        this.setNavigationAdapter(mListNameItem, mListIconItem, mListHeaderItem, mSparseCounterItem);
+        with(this).startingPosition(1) //Starting position in the list
+                .nameItem(mListNameItem)
+                .iconItem(mListIconItem)
+                .headerItem(mListHeaderItem)
+                .countItem(mSparseCounterItem)
+                .setOnClickUser(onClickPhoto)
+                .setOnClickFooter(onClickFooter)
+                .footerItem(R.string.settings, R.mipmap.ic_settings_black_24dp)
+                .build();
     }
 
     @Override
-    public void onUserInformation() {
-        this.mUserName.setText("Rudson Lima");
-        this.mUserEmail.setText("rudsonlive@gmail.com");
-        this.mUserPhoto.setImageResource(R.drawable.ic_rudsonlive);
-        this.mUserBackground.setImageResource(R.drawable.ic_user_background);
-    }
-
-    @Override
-    public void onItemClickNavigation(int position, int layoutContainerId) {
-
+    public void onItemClick(int position) {
         Fragment mFragment;
         FragmentManager mFragmentManager = getSupportFragmentManager();
 
@@ -83,29 +85,23 @@ public class MainActivity extends NavigationLiveo implements NavigationLiveoList
         }
 
         if (mFragment != null){
-            mFragmentManager.beginTransaction().replace(layoutContainerId, mFragment).commit();
+            mFragmentManager.beginTransaction().replace(R.id.container, mFragment).commit();
         }
 
         setElevationToolBar(position != 1 ? 15 : 0);
     }
 
-    @Override
-    public void onPrepareOptionsMenuNavigation(Menu menu, int position, boolean visible) {
-        switch (position) {
-            case 0:
-                menu.findItem(R.id.menu_add).setVisible(!visible);
-                menu.findItem(R.id.menu_search).setVisible(!visible);
-                break;
+    private View.OnClickListener onClickPhoto = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeDrawer();
         }
-    }
+    };
 
-    @Override
-    public void onClickFooterItemNavigation(View v) {
-        Toast.makeText(this, R.string.open_settings, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClickUserPhotoNavigation(View v) {
-        Toast.makeText(this, R.string.open_user_profile, Toast.LENGTH_SHORT).show();
-    }
+    private View.OnClickListener onClickFooter = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            closeDrawer();
+        }
+    };
 }
