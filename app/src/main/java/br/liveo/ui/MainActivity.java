@@ -42,7 +42,7 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
         mListIconItem.add(1, R.mipmap.ic_star_black_24dp); //Item no icon set 0
         mListIconItem.add(2, R.mipmap.ic_send_black_24dp); //Item no icon set 0
         mListIconItem.add(3, R.mipmap.ic_drafts_black_24dp);
-        mListIconItem.add(4, 0); //When the item is a subHeader the value of the icon 0
+        mListIconItem.add(4, NavigationLiveo.NO_ICON); //When the item is a subHeader the value of the icon 0
         mListIconItem.add(5, R.mipmap.ic_delete_black_24dp);
         mListIconItem.add(6, R.mipmap.ic_report_black_24dp);
 
