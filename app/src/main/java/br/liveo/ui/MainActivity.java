@@ -3,19 +3,18 @@ package br.liveo.ui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.SparseIntArray;
+import android.view.Menu;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import br.liveo.Model.HelpLiveo;
 import br.liveo.interfaces.OnItemClickListener;
+import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 import br.liveo.navigationviewpagerliveo.R;
 
 public class MainActivity extends NavigationLiveo implements OnItemClickListener {
 
-    private List<String> mListNameItem;
+    private HelpLiveo mHelpLiveo;
 
     @Override
     public void onInt(Bundle bundle) {
@@ -26,47 +25,26 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
         this.userPhoto.setImageResource(R.drawable.ic_rudsonlive);
         this.userBackground.setImageResource(R.drawable.ic_user_background_first);
 
-        // name of the list items
-        mListNameItem = new ArrayList<>();
-        mListNameItem.add(0, getString(R.string.inbox));
-        mListNameItem.add(1, getString(R.string.starred));
-        mListNameItem.add(2, getString(R.string.sent_mail));
-        mListNameItem.add(3, getString(R.string.drafts));
-        mListNameItem.add(4, getString(R.string.more_markers)); //This item will be a subHeader
-        mListNameItem.add(5, getString(R.string.trash));
-        mListNameItem.add(6, getString(R.string.spam));
+        // Creating items navigation
+        mHelpLiveo = new HelpLiveo();
+        mHelpLiveo.add(getString(R.string.inbox), R.mipmap.ic_inbox_black_24dp, 7);
+        mHelpLiveo.addSubHeader(getString(R.string.categories)); //Item subHeader
+        mHelpLiveo.add(getString(R.string.starred), R.mipmap.ic_star_black_24dp);
+        mHelpLiveo.add(getString(R.string.sent_mail), R.mipmap.ic_send_black_24dp);
+        mHelpLiveo.add(getString(R.string.drafts), R.mipmap.ic_drafts_black_24dp);
+        mHelpLiveo.addSeparator(); // Item separator
+        mHelpLiveo.add(getString(R.string.trash), R.mipmap.ic_delete_black_24dp);
+        mHelpLiveo.add(getString(R.string.spam), R.mipmap.ic_report_black_24dp, 120);
 
-        // icons list items
-        List<Integer> mListIconItem = new ArrayList<>();
-        mListIconItem.add(0, R.mipmap.ic_inbox_black_24dp);
-        mListIconItem.add(1, R.mipmap.ic_star_black_24dp); //Item no icon set 0
-        mListIconItem.add(2, R.mipmap.ic_send_black_24dp); //Item no icon set 0
-        mListIconItem.add(3, R.mipmap.ic_drafts_black_24dp);
-        mListIconItem.add(4, NavigationLiveo.NO_ICON); //When the item is a subHeader the value of the icon 0
-        mListIconItem.add(5, R.mipmap.ic_delete_black_24dp);
-        mListIconItem.add(6, R.mipmap.ic_report_black_24dp);
-
-        //{optional} - Among the names there is some subheader, you must indicate it here
-        List<Integer> mListHeaderItem = new ArrayList<>();
-        mListHeaderItem.add(4);
-
-        //{optional} - Among the names there is any item counter, you must indicate it (position) and the value here
-        SparseIntArray mSparseCounterItem = new SparseIntArray(); //indicate all items that have a counter
-        mSparseCounterItem.put(0, 7);
-        mSparseCounterItem.put(1, 123);
-        mSparseCounterItem.put(6, 250);
+        with(this).startingPosition(2) //Starting position in the list
+                .addAllHelpItem(mHelpLiveo.getHelp())
+                .footerItem(R.string.settings, R.mipmap.ic_settings_black_24dp)
+                .setOnClickUser(onClickPhoto)
+                .setOnPrepareOptionsMenu(onPrepare)
+                .setOnClickFooter(onClickFooter)
+                .build();
 
         this.setElevationToolBar(this.getCurrentPosition() != 1 ? 15 : 0);
-
-        with(this).startingPosition(1) //Starting position in the list
-                .nameItem(mListNameItem)
-                .iconItem(mListIconItem)
-                .headerItem(mListHeaderItem)
-                .countItem(mSparseCounterItem)
-                .setOnClickUser(onClickPhoto)
-                .setOnClickFooter(onClickFooter)
-                .footerItem(R.string.settings, R.mipmap.ic_settings_black_24dp)
-                .build();
     }
 
     @Override
@@ -80,7 +58,7 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
                 break;
 
             default:
-                mFragment = MainFragment.newInstance(mListNameItem.get(position));
+                mFragment = MainFragment.newInstance(mHelpLiveo.get(position).getName());
                 break;
         }
 
@@ -90,6 +68,12 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
 
         setElevationToolBar(position != 1 ? 15 : 0);
     }
+
+    private OnPrepareOptionsMenuLiveo onPrepare = new OnPrepareOptionsMenuLiveo() {
+        @Override
+        public void onPrepareOptionsMenu(Menu menu, int position, boolean visible) {
+        }
+    };
 
     private View.OnClickListener onClickPhoto = new View.OnClickListener() {
         @Override
