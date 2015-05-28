@@ -44,7 +44,7 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
                 .setOnClickFooter(onClickFooter)
                 .build();
 
-        this.setElevationToolBar(this.getCurrentPosition() != 1 ? 15 : 0);
+        this.setElevationToolBar(this.getCurrentPosition() != 2 ? 15 : 0);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
         FragmentManager mFragmentManager = getSupportFragmentManager();
 
         switch (position){
-            case 1:
+            case 2:
                 mFragment = new ViewPagerFragment();
                 break;
 
@@ -66,7 +66,7 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
             mFragmentManager.beginTransaction().replace(R.id.container, mFragment).commit();
         }
 
-        setElevationToolBar(position != 1 ? 15 : 0);
+        setElevationToolBar(position != 2 ? 15 : 0);
     }
 
     private OnPrepareOptionsMenuLiveo onPrepare = new OnPrepareOptionsMenuLiveo() {
