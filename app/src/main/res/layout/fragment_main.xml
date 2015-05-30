@@ -20,5 +20,6 @@
         android:gravity="center"
         android:layout_marginTop="16dp"
         android:text="@string/clear"
+        android:textColor="@color/nliveo_black"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>
