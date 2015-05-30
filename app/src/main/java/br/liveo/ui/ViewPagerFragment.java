@@ -2,6 +2,7 @@ package br.liveo.ui;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import java.util.List;
 
 import br.liveo.adapter.TabPagerItem;
 import br.liveo.adapter.ViewPagerAdapter;
-import br.liveo.ui.view.SlidingTabLayout;
 import br.liveo.navigationviewpagerliveo.R;
 
 public class ViewPagerFragment extends Fragment{
@@ -45,16 +45,10 @@ public class ViewPagerFragment extends Fragment{
     	
     	mViewPager.setOffscreenPageLimit(mTabs.size());
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mTabs));
-
-        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.tabs);
-        mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mViewPager);
-        mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.nliveo_white));
-
+        TabLayout mSlidingTabLayout = (TabLayout) view.findViewById(R.id.tabs);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSlidingTabLayout.setElevation(10);
         }
-
-        mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout.setupWithViewPager(mViewPager);
     }
 }

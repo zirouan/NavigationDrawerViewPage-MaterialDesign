@@ -38,13 +38,16 @@ public class MainActivity extends NavigationLiveo implements OnItemClickListener
 
         with(this).startingPosition(2) //Starting position in the list
                 .addAllHelpItem(mHelpLiveo.getHelp())
+                .colorNameSubHeader(R.color.nliveo_blue_colorPrimary)
+                .colorItemSelected(R.color.nliveo_blue_colorPrimary)
                 .footerItem(R.string.settings, R.mipmap.ic_settings_black_24dp)
                 .setOnClickUser(onClickPhoto)
                 .setOnPrepareOptionsMenu(onPrepare)
                 .setOnClickFooter(onClickFooter)
                 .build();
 
-        this.setElevationToolBar(this.getCurrentPosition() != 2 ? 15 : 0);
+        int position = this.getCurrentPosition();
+        this.setElevationToolBar(position != 2 ? 15 : 0);
     }
 
     @Override
