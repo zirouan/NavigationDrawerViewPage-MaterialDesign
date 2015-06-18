@@ -1,4 +1,4 @@
-package br.liveo.ui;
+package br.liveo.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,8 @@ import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 import br.liveo.navigationviewpagerliveo.R;
+import br.liveo.ui.fragment.MainFragment;
+import br.liveo.ui.fragment.ViewPagerFragment;
 
 public class MainActivity extends NavigationLiveo implements OnItemClickListener {
 

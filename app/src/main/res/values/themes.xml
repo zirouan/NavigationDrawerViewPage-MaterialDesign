@@ -5,7 +5,6 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/nliveo_green_colorPrimary</item>
         <item name="colorPrimaryDark">@color/nliveo_green_colorPrimaryDark</item>
-        <item name="colorAccent">@color/nliveo_green_colorPrimary</item>
     </style>
 
     <!--Here will be the theme of the class that will extends NavigationLiveo-->
@@ -13,6 +12,5 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/nliveo_green_colorPrimary</item>
         <item name="colorPrimaryDark">@color/nliveo_green_alpha_colorPrimaryDark</item>
-        <item name="colorAccent">@color/nliveo_green_colorPrimary</item>
     </style>
 </resources>

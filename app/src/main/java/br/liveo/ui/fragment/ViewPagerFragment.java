@@ -1,4 +1,4 @@
-package br.liveo.ui;
+package br.liveo.ui.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -41,11 +41,11 @@ public class ViewPagerFragment extends Fragment{
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-    	ViewPager mViewPager = (ViewPager) view.findViewById(R.id.pager);
+    	ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
     	
     	mViewPager.setOffscreenPageLimit(mTabs.size());
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mTabs));
-        TabLayout mSlidingTabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        TabLayout mSlidingTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSlidingTabLayout.setElevation(10);
         }
