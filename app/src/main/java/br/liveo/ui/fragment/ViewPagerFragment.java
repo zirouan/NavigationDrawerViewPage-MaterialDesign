@@ -41,14 +41,21 @@ public class ViewPagerFragment extends Fragment{
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-    	ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+    	final ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
     	
     	mViewPager.setOffscreenPageLimit(mTabs.size());
         mViewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager(), mTabs));
-        TabLayout mSlidingTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        final TabLayout mSlidingTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mSlidingTabLayout.setElevation(10);
         }
-        mSlidingTabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSlidingTabLayout.setupWithViewPager(mViewPager);
+            }
+        }, 1);
     }
 }
