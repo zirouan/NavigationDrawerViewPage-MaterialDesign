@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.View;
 
-import br.liveo.Model.HelpLiveo;
 import br.liveo.interfaces.OnItemClickListener;
 import br.liveo.interfaces.OnPrepareOptionsMenuLiveo;
+import br.liveo.model.HelpLiveo;
 import br.liveo.navigationliveo.NavigationLiveo;
 import br.liveo.navigationviewpagerliveo.R;
 import br.liveo.ui.fragment.MainFragment;
